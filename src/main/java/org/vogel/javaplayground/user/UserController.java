@@ -18,19 +18,23 @@ public class UserController {
     @Autowired
     private UserDAO userDAO;
 
+    @Autowired
+    private UserMapper userMapper;
 
     @GetMapping("/{name}")
-    public User getByName(@PathVariable("name") final String name) {
-        return userDAO.findByName(name).orElseThrow(() -> new EntityNotFoundException(
+    public UserDTO getByName(@PathVariable("name") final String name) {
+        User user = userDAO.findByName(name).orElseThrow(() -> new EntityNotFoundException(
                 String.format("entity 'user' with name '%s' not found ", name)));
+        UserDTO userDTO = userMapper.toDTO(user);
+        return userDTO;
     }
 
     @PostMapping(path = "")
-    public User upsert(@RequestBody User user) {
-        if (user.getId() != null) {
-            userDAO.findExistingById(user.getId());
-        }
+    public UserDTO upsert(@RequestBody UserDTO userDTO) {
+        User user = userDAO.findByName(userDTO.getName()).orElseGet(User::new);
+        user = userMapper.toEntity(userDTO, user);
         user = userDAO.merge(user);
-        return user;
+        UserDTO updatedUserDTO = userMapper.toDTO(user);
+        return updatedUserDTO;
     }
 }

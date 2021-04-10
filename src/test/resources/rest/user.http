@@ -1,0 +1,44 @@
+POST http://localhost:8080/user
+Content-Type: application/json
+
+{
+  "name": "Alexander",
+  "lastName": "Vogelgsang",
+  "address": {
+    "city": "Augsburg",
+    "street": "Prof-Messerschmitt-Str. 17b",
+    "zipCode": "86159"
+  }
+}
+
+###
+
+POST http://localhost:8080/user
+Content-Type: application/json
+
+{
+  "name": "Alexander",
+  "lastName": "Vogelgsang",
+  "address": {
+    "city": "Mering",
+    "street": "Von-Kleist-Str 17",
+    "zipCode": "86415"
+  }
+}
+
+###
+
+POST http://localhost:8080/user
+Content-Type: application/json
+
+{
+  "name": "Alexander",
+  "lastName": "Vogelgsang"
+}
+
+###
+
+GET http://localhost:8080/user/Alexander
+Accept: application/json
+
+###
