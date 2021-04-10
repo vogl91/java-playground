@@ -30,7 +30,7 @@ import javax.persistence.UniqueConstraint;
         @NamedQuery(name = "user.findByName", query = "select u from User u where u.name = :name")
 })
 @SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq")
-public class User extends AbstractEntity {
+public class User extends AbstractEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
     @Column(name = "id")

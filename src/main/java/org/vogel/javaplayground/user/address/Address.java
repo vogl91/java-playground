@@ -3,6 +3,7 @@ package org.vogel.javaplayground.user.address;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.vogel.javaplayground.common.AbstractEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Table(name = "t_address")
 @SequenceGenerator(name = "address_id_seq", sequenceName = "address_id_seq")
-public class Address {
+public class Address extends AbstractEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_id_seq")
     @Column(name = "id")

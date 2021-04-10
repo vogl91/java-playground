@@ -3,6 +3,7 @@ package org.vogel.javaplayground.product.textusage;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.vogel.javaplayground.common.AbstractEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +22,7 @@ import javax.persistence.UniqueConstraint;
         @UniqueConstraint(name = "uc_text_usage_name", columnNames = {"name"})
 })
 @SequenceGenerator(name = "text_usage_id_seq", sequenceName = "text_usage_id_seq")
-public class TextUsage {
+public class TextUsage extends AbstractEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "text_usage_id_seq")
     @Column(name = "id")
