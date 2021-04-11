@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -25,8 +24,8 @@ public class ProductController {
     private ProductMapper productMapper;
 
     @GetMapping("")
-    public List<ProductDTO> getAll() {
-        return productDAO.findAll().stream().map(productMapper::toDTO).collect(toList());
+    public ProductListDTO getAll() {
+        return new ProductListDTO(productDAO.findAll().stream().map(productMapper::toDTO).collect(toList()));
     }
 
     @GetMapping("/{id}")

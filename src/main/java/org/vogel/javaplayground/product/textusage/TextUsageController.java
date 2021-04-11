@@ -25,8 +25,8 @@ public class TextUsageController {
     private TextUsageMapper textUsageMapper;
 
     @GetMapping("")
-    public List<TextUsageDTO> getAll() {
-        return textUsageDAO.findAll().stream().map(textUsageMapper::toDTO).collect(toList());
+    public TextUsageListDTO getAll() {
+        return new TextUsageListDTO(textUsageDAO.findAll().stream().map(textUsageMapper::toDTO).collect(toList()));
     }
 
     @GetMapping("/{id}")
