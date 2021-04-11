@@ -11,6 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -25,8 +28,16 @@ import java.util.Set;
 @Table(name = "t_product", uniqueConstraints = {
         @UniqueConstraint(name = "uc_product_name", columnNames = {"name"})
 })
+@NamedEntityGraph(name = Product.ENTITY_GRAPH_FETCH_ALL,
+        attributeNodes = {
+                @NamedAttributeNode(value = "texts", subgraph = "text"),
+        },
+        subclassSubgraphs = {
+                @NamedSubgraph(name = "text", attributeNodes = {@NamedAttributeNode("textUsage")})
+        })
 @SequenceGenerator(name = "product_id_seq", sequenceName = "product_id_seq", allocationSize = 10)
 public class Product extends AbstractEntity<Long> {
+    public static final String ENTITY_GRAPH_FETCH_ALL = "product.fetch-all";
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_id_seq")
     @Column(name = "id")

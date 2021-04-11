@@ -1,5 +1,8 @@
 package org.vogel.javaplayground.common;
 
+import org.hibernate.graph.GraphSemantic;
+
+import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
@@ -22,17 +25,28 @@ public abstract class AbstractDAO<T> {
         return Optional.ofNullable(em.find(getEntityClass(), id));
     }
 
+    public Optional<T> findById(final Long id, final String graphName) {
+        EntityGraph<?> entityGraph = em.getEntityGraph(graphName);
+        return Optional.ofNullable(
+                em.find(getEntityClass(), id, Map.of(GraphSemantic.LOAD.getJpaHintName(), entityGraph)));
+    }
+
+    public T findExistingById(final Long id) {
+        return findById(id).orElseThrow(() -> new EntityNotFoundException(
+                String.format("entity '%s' with id '%d' not found", getEntityClass().getSimpleName(), id)));
+    }
+
+    public T findExistingById(final Long id, final String graphName) {
+        return findById(id, graphName).orElseThrow(() -> new EntityNotFoundException(
+                String.format("entity '%s' with id '%d' not found", getEntityClass().getSimpleName(), id)));
+    }
+
     public List<T> findAll() {
         var cb = em.getCriteriaBuilder();
         CriteriaQuery<T> query = cb.createQuery(getEntityClass());
         query.from(getEntityClass());
         return em.createQuery(query).getResultList();
 
-    }
-
-    public T findExistingById(final Long id) {
-        return findById(id).orElseThrow(() -> new EntityNotFoundException(
-                String.format("entity '%s' with id '%d' not found", getEntityClass().getSimpleName(), id)));
     }
 
     public T getReference(Long id) {

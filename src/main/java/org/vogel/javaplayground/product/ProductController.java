@@ -30,7 +30,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ProductDTO getById(@PathVariable("id") final Long id) {
-        Product product = productDAO.findExistingById(id);
+        Product product = productDAO.findExistingById(id, Product.ENTITY_GRAPH_FETCH_ALL);
         return productMapper.toDTO(product);
     }
 
@@ -38,7 +38,7 @@ public class ProductController {
     public ProductDTO upsert(@RequestBody ProductDTO productDTO) {
         Product product = productDTO.getId() == null
                 ? new Product() // no persist because this causes hibernate to issue an insert with null values
-                : productDAO.findExistingById(productDTO.getId());
+                : productDAO.findExistingById(productDTO.getId(), Product.ENTITY_GRAPH_FETCH_ALL);
         product = productMapper.toEntity(productDTO, product);
         product = productDAO.merge(product);
         productDAO.flush();
