@@ -1,4 +1,4 @@
-package org.vogel.javaplayground.product;
+package org.vogel.javaplayground.product.uni;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,22 +22,18 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "t_text")
-@SequenceGenerator(name = "text_id_seq", sequenceName = "text_id_seq", allocationSize = 10)
-public class Text extends AbstractEntity<Long> {
+@Table(name = "t_text_uni")
+@SequenceGenerator(name = "text_uni_id_seq", sequenceName = "text_uni_id_seq", allocationSize = 10)
+public class TextUni extends AbstractEntity<Long> {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "text_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "text_uni_id_seq")
     @Column(name = "id")
     private Long id;
 
     @Column(name = "template", nullable = false)
     private String template;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false, foreignKey = @ForeignKey(name = "fk_text_product"))
-    private Product product;
-
     @OneToOne
-    @JoinColumn(name = "text_usage_id", nullable = false, foreignKey = @ForeignKey(name = "fk_text_text_usage"))
+    @JoinColumn(name = "text_usage_id", nullable = false, foreignKey = @ForeignKey(name = "fk_text_uni_text_usage"))
     private TextUsage textUsage;
 }

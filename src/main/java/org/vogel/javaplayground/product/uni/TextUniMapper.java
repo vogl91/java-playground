@@ -1,8 +1,9 @@
-package org.vogel.javaplayground.product;
+package org.vogel.javaplayground.product.uni;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.vogel.javaplayground.common.exception.InvalidIdException;
+import org.vogel.javaplayground.product.TextDTO;
 import org.vogel.javaplayground.product.textusage.TextUsageDAO;
 import org.vogel.javaplayground.product.textusage.TextUsageMapper;
 
@@ -17,14 +18,14 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 
 @Component
-public class TextMapper {
+public class TextUniMapper {
     @Autowired
     private TextUsageMapper textUsageMapper;
 
     @Autowired
     private TextUsageDAO textUsageDAO;
 
-    public TextDTO toDTO(final Text text) {
+    public TextDTO toDTO(final TextUni text) {
         TextDTO textDTO = new TextDTO();
         textDTO.setId(text.getId());
         textDTO.setTemplate(text.getTemplate());
@@ -32,12 +33,11 @@ public class TextMapper {
         return textDTO;
     }
 
-    public Text toEntity(final TextDTO textDTO, final Text text, final Product product) {
+    public TextUni toEntity(final TextDTO textDTO, final TextUni text) {
         // do not map primary key (id)
         text.setTemplate(textDTO.getTemplate()); // primitive property. just map value
         text.setTextUsage(textUsageDAO.getReference(textDTO.getTextUsage().getId())); // OneToOne reference. get from
         // context
-        text.setProduct(product); // parent reference. get from caller
         return text;
     }
 
@@ -52,8 +52,8 @@ public class TextMapper {
      * @param product  parent. Only needed for bidirectional associations
      * @return new Set with texts created and updated from textDTOs
      */
-    public Set<Text> toEntities(List<TextDTO> textDTOs, Set<Text> texts, final Product product) {
-        final Map<Long, Text> textsById = texts.stream().collect(toMap(Text::getId, identity()));
+    public Set<TextUni> toEntities(List<TextDTO> textDTOs, Set<TextUni> texts, final ProductUni product) {
+        final Map<Long, TextUni> textsById = texts.stream().collect(toMap(TextUni::getId, identity()));
         Map<Boolean, List<TextDTO>> textDTOsByNewAndExisting =
                 textDTOs.stream().collect(groupingBy(text -> text.getId() == null));
         List<TextDTO> newTextDTOs = textDTOsByNewAndExisting.getOrDefault(true, emptyList());
@@ -64,12 +64,11 @@ public class TextMapper {
                         .map(textDTO -> toEntity(
                                 textDTO,
                                 Optional.ofNullable(textsById.get(textDTO.getId()))
-                                        .orElseThrow(() -> new InvalidIdException(Text.class, textDTO.getId())),
-                                product
+                                        .orElseThrow(() -> new InvalidIdException(TextUni.class, textDTO.getId()))
                                                 ))
                         .forEachOrdered(texts::add);
         newTextDTOs.stream()
-                   .map(textDTO -> toEntity(textDTO, new Text(), product))
+                   .map(textDTO -> toEntity(textDTO, new TextUni()))
                    .forEachOrdered(texts::add);
         return texts;
     }

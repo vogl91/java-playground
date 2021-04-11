@@ -1,0 +1,35 @@
+POST http://localhost:8080/product/uni
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Chair",
+  "texts": [
+    {
+      "id": 1,
+      "template": "Ein ganz normaler Stuhl",
+      "textUsage": {
+        "id": 1,
+        "name": "STD"
+      }
+    },
+    {
+      "template": "Hersteller Stuhl 1",
+      "textUsage": {
+        "id": 2,
+        "name": "HBZ"
+      }
+    }
+  ]
+}
+
+###
+GET http://localhost:8080/product/uni/1
+Accept: application/json
+
+###
+GET http://localhost:8080/product/uni
+Accept: application/json
+
+###
+

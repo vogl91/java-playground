@@ -1,12 +1,12 @@
-POST http://localhost:8080/product
+POST http://localhost:8080/product/bi
 Content-Type: application/json
 
 {
-  "id": 14,
+  "id": 1,
   "name": "Chair",
   "texts": [
     {
-      "id": 14,
+      "id": 1,
       "template": "Ein ganz normaler Stuhl",
       "textUsage": {
         "id": 1,
@@ -14,8 +14,7 @@ Content-Type: application/json
       }
     },
     {
-      "id": 15,
-      "template": "MyStuhl",
+      "template": "Hersteller Stuhl 1",
       "textUsage": {
         "id": 2,
         "name": "HBZ"
@@ -25,11 +24,11 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/product/14
+GET http://localhost:8080/product/bi/1
 Accept: application/json
 
 ###
-GET http://localhost:8080/product
+GET http://localhost:8080/product/bi
 Accept: application/json
 
 ###

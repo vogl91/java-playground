@@ -2,6 +2,7 @@ package org.vogel.javaplayground.product;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.vogel.javaplayground.product.TextDTO;
 
 import java.util.List;
 
