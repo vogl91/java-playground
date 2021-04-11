@@ -14,10 +14,10 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @RestController
-@RequestMapping(path = "/textusage")
+@RequestMapping(path = TextUsageController.BASE_PATH)
 @Transactional
 public class TextUsageController {
-
+    public static final String BASE_PATH = "/textusage";
     @Autowired
     private TextUsageDAO textUsageDAO;
 

@@ -14,9 +14,10 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @RestController
-@RequestMapping(path = "/product")
+@RequestMapping(path = ProductController.BASE_PATH)
 @Transactional
 public class ProductController {
+    public static final String BASE_PATH = "/product";
     @Autowired
     private ProductDAO productDAO;
 
