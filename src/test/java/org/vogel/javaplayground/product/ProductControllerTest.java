@@ -38,17 +38,17 @@ public class ProductControllerTest extends AbstractIntegrationTest {
             textDTO.setTextUsage(textUsageDTO);
             productDTO.setTexts(singletonList(textDTO));
 
-            ResponseEntity<Product> response = testRestTemplate.postForEntity(
+            ResponseEntity<ProductDTO> response = testRestTemplate.postForEntity(
                     ProductController.BASE_PATH,
                     productDTO,
-                    Product.class
+                    ProductDTO.class
             );
 
             assertThat(response.getStatusCodeValue()).isEqualTo(200);
-            Product product = response.getBody();
-            assertThat(product).isNotNull();
-            assertThat(product.getId()).isNotNull();
-            assertThat(product.getName()).isEqualTo(productDTO.getName());
+            ProductDTO responseProduct = response.getBody();
+            assertThat(responseProduct).isNotNull();
+            assertThat(responseProduct.getId()).isNotNull();
+            assertThat(responseProduct.getName()).isEqualTo(productDTO.getName());
         }
     }
 }
