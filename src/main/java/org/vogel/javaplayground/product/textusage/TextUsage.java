@@ -21,13 +21,13 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "t_text_usage", uniqueConstraints = {
         @UniqueConstraint(name = "uc_text_usage_name", columnNames = {"name"})
 })
-@SequenceGenerator(name = "text_usage_id_seq", sequenceName = "text_usage_id_seq")
+@SequenceGenerator(name = "text_usage_id_seq", sequenceName = "text_usage_id_seq", allocationSize = 1)
 public class TextUsage extends AbstractEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "text_usage_id_seq")
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 }

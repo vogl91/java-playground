@@ -12,7 +12,6 @@ public class TextUsageMapper {
     }
 
     public TextUsage toEntity(final TextUsageDTO textUsageDTO, final TextUsage textUsage) {
-        textUsage.setId(textUsageDTO.getId());
         textUsage.setName(textUsageDTO.getName());
         return textUsage;
     }

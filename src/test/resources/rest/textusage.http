@@ -2,13 +2,23 @@ POST http://localhost:8080/textusage/
 Content-Type: application/json
 
 {
-  "id": "3",
+  "name": "STD"
+}
+
+###
+POST http://localhost:8080/textusage/
+Content-Type: application/json
+
+{
   "name": "HSB"
 }
 
 ###
-GET http://localhost:8080/textusage/2
+GET http://localhost:8080/textusage/1
 Accept: application/json
 
 ###
+GET http://localhost:8080/textusage
+Accept: application/json
 
+###

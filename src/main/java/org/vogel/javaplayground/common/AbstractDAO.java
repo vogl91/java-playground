@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
@@ -21,13 +22,34 @@ public abstract class AbstractDAO<T> {
         return Optional.ofNullable(em.find(getEntityClass(), id));
     }
 
+    public List<T> findAll() {
+        var cb = em.getCriteriaBuilder();
+        CriteriaQuery<T> query = cb.createQuery(getEntityClass());
+        query.from(getEntityClass());
+        return em.createQuery(query).getResultList();
+
+    }
+
     public T findExistingById(final Long id) {
         return findById(id).orElseThrow(() -> new EntityNotFoundException(
                 String.format("entity '%s' with id '%d' not found", getEntityClass().getSimpleName(), id)));
     }
 
+    public T getReference(Long id) {
+        return em.getReference(getEntityClass(), id);
+    }
+
     public T merge(final T entity) {
         return em.merge(entity);
+    }
+
+    public T persist(final T entity) {
+        em.persist(entity);
+        return entity;
+    }
+
+    public void flush() {
+        em.flush();
     }
 
     public List<T> executeNamedQuery(final String queryName, Map<String, Object> parameters) {

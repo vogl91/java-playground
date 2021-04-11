@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping(path = "/textusage")
@@ -20,6 +23,11 @@ public class TextUsageController {
 
     @Autowired
     private TextUsageMapper textUsageMapper;
+
+    @GetMapping("")
+    public List<TextUsageDTO> getAll() {
+        return textUsageDAO.findAll().stream().map(textUsageMapper::toDTO).collect(toList());
+    }
 
     @GetMapping("/{id}")
     public TextUsageDTO getById(@PathVariable("id") final Long id) {

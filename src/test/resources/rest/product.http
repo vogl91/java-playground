@@ -1,0 +1,36 @@
+POST http://localhost:8080/product
+Content-Type: application/json
+
+{
+  "id": 14,
+  "name": "Chair",
+  "texts": [
+    {
+      "id": 14,
+      "template": "Ein ganz normaler Stuhl",
+      "textUsage": {
+        "id": 1,
+        "name": "STD"
+      }
+    },
+    {
+      "id": 15,
+      "template": "MyStuhl",
+      "textUsage": {
+        "id": 2,
+        "name": "HBZ"
+      }
+    }
+  ]
+}
+
+###
+GET http://localhost:8080/product/12
+Accept: application/json
+
+###
+GET http://localhost:8080/product
+Accept: application/json
+
+###
+
